@@ -1,0 +1,8 @@
+# Local data directory created by Docker bind mounts
+data/
+
+# Environment file containing credentials
+.env
+
+# MacOS / OS metadata
+.DS_Store

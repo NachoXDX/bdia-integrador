@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDIA - Sistema de Gestión Integral StartUp</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css?v=2.3.0">
+    <!-- Marked.js Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card glass-panel">
+            <div class="brand">
+                <i class="fa-solid fa-cubes-stacked brand-icon"></i>
+                <h2>BDIA Integrador</h2>
+                <p>Sistema de Gestión & RAG Vectorial</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginMail"><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                    <input type="email" id="loginMail" placeholder="admin@empresa.com" value="admin@empresa.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPass"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" value="admin123" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
+                </button>
+                <div id="loginError" class="alert alert-danger hidden"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Application Screen -->
+    <div id="appScreen" class="app-container hidden">
+        <!-- Top Navbar -->
+        <header class="navbar glass-panel">
+            <div class="nav-left">
+                <div class="nav-brand">
+                    <i class="fa-solid fa-cubes-stacked"></i>
+                    <span>BDIA System</span>
+                </div>
+                <div class="nav-user-info" id="navUserInfo">
+                    <span class="user-email-badge" id="userEmailBadge"><i class="fa-solid fa-user-circle"></i> admin@empresa.com</span>
+                    <span class="role-badge" id="userRoleBadge">FULL_ACCESS</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button id="logoutBtn" class="btn btn-outline-danger btn-sm">
+                    <i class="fa-solid fa-power-off"></i> Cerrar Sesión
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Layout with Navigation -->
+        <div class="main-layout">
+            <!-- Sidebar Menu -->
+            <aside class="sidebar glass-panel">
+                <nav class="sidebar-nav">
+                    <button class="nav-link active" data-tab="tabWelcome"><i class="fa-solid fa-house"></i> Inicio / Bienvenido</button>
+                    <button class="nav-link" data-tab="tabProyectos"><i class="fa-solid fa-diagram-project"></i> Proyectos</button>
+                    <button class="nav-link" data-tab="tabPartes"><i class="fa-solid fa-gears"></i> Partes & Inventario</button>
+                    <button class="nav-link" data-tab="tabStakeholders"><i class="fa-solid fa-users"></i> Personas</button>
+                    <button class="nav-link" data-tab="tabDocumentos"><i class="fa-solid fa-file-pdf"></i> Documentos</button>
+                    <button class="nav-link" data-tab="tabStock"><i class="fa-solid fa-boxes-stacked"></i> Stock & Inventario</button>
+                    <button class="nav-link" data-tab="tabArchivos"><i class="fa-solid fa-folder-open"></i> Catálogo Archivos</button>
+                    <button class="nav-link" data-tab="tabFinanzas"><i class="fa-solid fa-file-invoice-dollar"></i> Finanzas</button>
+                    <button class="nav-link" data-tab="tabAgenteRAG"><i class="fa-solid fa-brain"></i> Agente RAG</button>
+                    <button class="nav-link" data-tab="tabNL2SQL"><i class="fa-solid fa-wand-magic-sparkles"></i> Asistente SQL (NL2SQL)</button>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="content-area">
+                <!-- Section 1: Welcome Hub Page -->
+                <section id="tabWelcome" class="tab-content active">
+                    <div class="welcome-banner glass-panel mb-4">
+                        <div class="welcome-text">
+                            <h1>👋 Bienvenido a BDIA System</h1>
+                            <p>Plataforma de gestión integral de proyectos, inventario de componentes, stakeholders, documentos y control de stock.</p>
+                        </div>
+                    </div>
+
+                    <h2 class="section-subtitle mb-3">Módulos Principales</h2>
+                    <div class="welcome-grid">
+                        <div class="welcome-card glass-panel" onclick="switchTab('tabProyectos')">
+                            <div class="card-icon bg-primary"><i class="fa-solid fa-diagram-project"></i></div>
+                            <h3>Proyectos</h3>
+                            <p>Explora proyectos activos. Visualiza y modifica en pantalla completa sus partes, documentos, personas, ingresos y egresos pre-asociados.</p>
+                            <span class="card-link">Acceder a Proyectos <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+
+                        <div class="welcome-card glass-panel" onclick="switchTab('tabPartes')">
+                            <div class="card-icon bg-success"><i class="fa-solid fa-gears"></i></div>
+                            <h3>Partes</h3>
+                            <p>Catálogo general en pantalla completa. Subpartes de ensamble (BOM), cotizaciones de proveedores y archivos de especificación.</p>
+                            <span class="card-link">Acceder a Partes <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+
+                        <div class="welcome-card glass-panel" onclick="switchTab('tabStakeholders')">
+                            <div class="card-icon bg-info"><i class="fa-solid fa-users"></i></div>
+                            <h3>Personas</h3>
+                            <p>Directorio unificado de personas, empleados (sueldos y puestos), clientes y proveedores (dependencias).</p>
+                            <span class="card-link">Acceder a Personas <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+
+                        <div class="welcome-card glass-panel" onclick="switchTab('tabDocumentos')">
+                            <div class="card-icon bg-warning"><i class="fa-solid fa-file-pdf"></i></div>
+                            <h3>Documentos</h3>
+                            <p>Gestión de documentos en pantalla completa con versiones relativas v1, v2, v3 en MinIO y carga de nuevas versiones.</p>
+                            <span class="card-link">Acceder a Documentos <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+
+                        <div class="welcome-card glass-panel" onclick="switchTab('tabStock')">
+                            <div class="card-icon bg-danger"><i class="fa-solid fa-boxes-stacked"></i></div>
+                            <h3>Stock & Movimientos</h3>
+                            <p>Niveles actuales de inventario e historial de movimientos unificados con alternancia de vista.</p>
+                            <span class="card-link">Acceder a Stock <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+
+                        <div class="welcome-card glass-panel" onclick="switchTab('tabArchivos')">
+                            <div class="card-icon bg-secondary"><i class="fa-solid fa-folder-open"></i></div>
+                            <h3>Archivos Catalog</h3>
+                            <p>Planos y hojas de datos. Vista detallada en pantalla completa con historial de versiones v1, v2 y carga de nuevas versiones.</p>
+                            <span class="card-link">Acceder a Archivos <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+
+                        <div class="welcome-card glass-panel" onclick="switchTab('tabAgenteRAG')">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #10b981, #3b82f6); color: white;"><i class="fa-solid fa-brain"></i></div>
+                            <h3>Agente RAG</h3>
+                            <p>Consultas vectoriales sobre documentos en lenguaje natural usando embeddings de NVIDIA Nemotron 3 embed 1B con citación de fuentes.</p>
+                            <span class="card-link">Probar Agente RAG <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+
+                        <div class="welcome-card glass-panel" onclick="switchTab('tabNL2SQL')">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #6366f1, #a855f7); color: white;"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                            <h3>Asistente SQL Natural</h3>
+                            <p>Consulta la base de datos en lenguaje natural mediante el agente LangChain + OpenRouter con formateo de respuestas y vista de tablas.</p>
+                            <span class="card-link">Probar Asistente SQL <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Proyectos (Full-Screen Layout) -->
+                <section id="tabProyectos" class="tab-content">
+                    <!-- View 1: Projects List -->
+                    <div id="proyectosListView">
+                        <div class="section-header">
+                            <div>
+                                <h2>📁 Gestión de Proyectos</h2>
+                                <p class="text-muted small">Haz clic sobre cualquier proyecto para abrir su gestión completa en pantalla completa.</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="openModal('modalProyecto')"><i class="fa-solid fa-plus"></i> Nuevo Proyecto</button>
+                        </div>
+
+                        <div class="filter-bar glass-panel mb-3">
+                            <div class="form-row">
+                                <input type="text" id="filterProjSearch" placeholder="🔍 Buscar por nombre..." oninput="filterProyectosTable()">
+                                <select id="filterProjEstado" onchange="filterProyectosTable()" style="max-width: 200px;">
+                                    <option value="">Todos los Estados</option>
+                                    <option value="EN_PROGRESO">EN_PROGRESO</option>
+                                    <option value="PAUSADO">PAUSADO</option>
+                                    <option value="FINALIZADO">FINALIZADO</option>
+                                    <option value="CANCELADO">CANCELADO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="projectsTable" class="card glass-panel">Cargando proyectos...</div>
+                    </div>
+
+                    <!-- View 2: Full-Screen Project Detail Screen -->
+                    <div id="proyectoDetailView" class="hidden">
+                        <div class="fullscreen-header glass-panel mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                            <button class="btn btn-secondary btn-sm" onclick="closeProyectoDetailView()">
+                                <i class="fa-solid fa-arrow-left"></i> Volver a Lista de Proyectos
+                            </button>
+                            <h2 id="detailProjScreenTitle" class="m-0">Detalle del Proyecto</h2>
+                            <button class="btn btn-danger btn-sm" onclick="deleteProyectoCurrentFS()"><i class="fa-solid fa-trash"></i> Eliminar Proyecto</button>
+                        </div>
+
+                        <div class="card glass-panel p-4">
+                            <!-- Fullscreen Sub Navigation Tabs -->
+                            <div class="fullscreen-tabs">
+                                <button class="fs-tab-btn active" data-fstab="projFSInfo"><i class="fa-solid fa-info-circle"></i> Info General</button>
+                                <button class="fs-tab-btn" data-fstab="projFSPartes"><i class="fa-solid fa-gears"></i> Partes Vinculadas</button>
+                                <button class="fs-tab-btn" data-fstab="projFSDocumentos"><i class="fa-solid fa-file-pdf"></i> Documentos</button>
+                                <button class="fs-tab-btn" data-fstab="projFSPersonas"><i class="fa-solid fa-users"></i> Personas</button>
+                                <button class="fs-tab-btn" data-fstab="projFSIngresos"><i class="fa-solid fa-arrow-down-long text-success"></i> Ingresos del Proyecto</button>
+                                <button class="fs-tab-btn" data-fstab="projFSEgresos"><i class="fa-solid fa-arrow-up-long text-danger"></i> Egresos del Proyecto</button>
+                            </div>
+
+                            <div class="fullscreen-body mt-4">
+                                <!-- Subtab 1: General Info -->
+                                <div id="projFSInfo" class="fs-tab-content active">
+                                    <form id="formEditProyectoFS">
+                                        <input type="hidden" id="editProjFSId">
+                                        <div class="form-group">
+                                            <label>Nombre del Proyecto</label>
+                                            <input type="text" id="editProjFSNombre" required>
+                                        </div>
+                                        <div class="grid-2-cols">
+                                            <div class="form-group">
+                                                <label>Estado</label>
+                                                <select id="editProjFSEstado">
+                                                    <option value="EN_PROGRESO">EN_PROGRESO</option>
+                                                    <option value="PAUSADO">PAUSADO</option>
+                                                    <option value="FINALIZADO">FINALIZADO</option>
+                                                    <option value="CANCELADO">CANCELADO</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Fecha Inicio</label>
+                                                <input type="datetime-local" id="editProjFSFechaInicio">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Fecha Fin (Opcional)</label>
+                                            <input type="datetime-local" id="editProjFSFechaFin">
+                                        </div>
+                                        <div class="modal-actions">
+                                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Guardar Cambios del Proyecto</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Subtab 2: Partes -->
+                                <div id="projFSPartes" class="fs-tab-content">
+                                    <h4>Partes e Insumos Asignados</h4>
+                                    <div id="projFSLinkedPartesList" class="table-container mb-4">Cargando partes vinculadas...</div>
+
+                                    <div class="card glass-panel p-3">
+                                        <h5><i class="fa-solid fa-plus-circle"></i> Vincular Nueva Parte al Proyecto</h5>
+                                        <form id="formAssignParteProjFS" class="form-row mt-2">
+                                            <select id="assignParteFSSelect" style="flex:2;" required></select>
+                                            <input type="number" step="0.01" id="assignParteFSCantidad" placeholder="Cantidad" style="flex:1;" required>
+                                            <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-link"></i> Vincular Parte</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Subtab 3: Documentos -->
+                                <div id="projFSDocumentos" class="fs-tab-content">
+                                    <h4>Documentos Técnicos Asignados</h4>
+                                    <div id="projFSLinkedDocsList" class="table-container mb-4">Cargando documentos vinculados...</div>
+
+                                    <div class="card glass-panel p-3">
+                                        <h5><i class="fa-solid fa-plus-circle"></i> Vincular Documento al Proyecto</h5>
+                                        <form id="formAssignDocProjFS" class="form-row mt-2">
+                                            <select id="assignDocFSSelect" style="flex:3;" required></select>
+                                            <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-link"></i> Vincular Documento</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Subtab 4: Personas -->
+                                <div id="projFSPersonas" class="fs-tab-content">
+                                    <h4>Personas & Equipo Asignado</h4>
+                                    <div id="projFSLinkedPersonasList" class="table-container mb-4">Cargando personas vinculadas...</div>
+
+                                    <div class="card glass-panel p-3">
+                                        <h5><i class="fa-solid fa-user-plus"></i> Asignar Persona al Proyecto</h5>
+                                        <form id="formAssignPersonaProjFS" class="form-row mt-2">
+                                            <select id="assignPersonaFSSelect" style="flex:2;" required></select>
+                                            <input type="text" id="assignPersonaFSRol" placeholder="Rol en el Proyecto (Ej. Lider, Diseñador)" style="flex:2;" required>
+                                            <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-user-check"></i> Asignar Persona</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Subtab 5: Ingresos del Proyecto -->
+                                <div id="projFSIngresos" class="fs-tab-content">
+                                    <h4>Ingresos Financieros Asociados a este Proyecto</h4>
+                                    <div id="projFSLinkedIngresosList" class="table-container mb-4">Cargando ingresos...</div>
+
+                                    <div class="card glass-panel p-3">
+                                        <h5><i class="fa-solid fa-plus-circle"></i> Registrar Ingreso Directo para este Proyecto</h5>
+                                        <form id="formAddDirectIngresoProj" class="form-row mt-2">
+                                            <input type="number" step="0.01" id="directIngMonto" placeholder="Monto ($)" style="flex:1;" required>
+                                            <input type="text" id="directIngDesc" placeholder="Descripción del ingreso" style="flex:3;" required>
+                                            <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-plus"></i> Registrar Ingreso</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Subtab 6: Egresos del Proyecto -->
+                                <div id="projFSEgresos" class="fs-tab-content">
+                                    <h4>Egresos Financieros Asociados a este Proyecto</h4>
+                                    <div id="projFSLinkedEgresosList" class="table-container mb-4">Cargando egresos...</div>
+
+                                    <div class="card glass-panel p-3">
+                                        <h5><i class="fa-solid fa-minus-circle"></i> Registrar Egreso Directo para este Proyecto</h5>
+                                        <form id="formAddDirectEgresoProj" class="form-row mt-2">
+                                            <input type="number" step="0.01" id="directEgrMonto" placeholder="Monto ($)" style="flex:1;" required>
+                                            <input type="text" id="directEgrDesc" placeholder="Descripción del egreso" style="flex:3;" required>
+                                            <button type="submit" class="btn btn-sm btn-danger"><i class="fa-solid fa-minus"></i> Registrar Egreso</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Partes (Full-Screen Layout) -->
+                <section id="tabPartes" class="tab-content">
+                    <!-- View 1: Partes List -->
+                    <div id="partesListView">
+                        <div class="section-header">
+                            <div>
+                                <h2>🧩 Catálogo de Partes e Insumos</h2>
+                                <p class="text-muted small">Haz clic en una parte para abrir su gestión completa en pantalla completa.</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="openModal('modalParte')"><i class="fa-solid fa-plus"></i> Nueva Parte</button>
+                        </div>
+
+                        <div class="filter-bar glass-panel mb-3">
+                            <div class="form-row">
+                                <input type="text" id="filterParteSearch" placeholder="🔍 Buscar por nombre..." oninput="filterPartesTable()">
+                                <select id="filterParteCategoria" onchange="filterPartesTable()" style="max-width: 180px;">
+                                    <option value="">Todas las Categorías</option>
+                                    <option value="ELECTRONICA">ELECTRONICA</option>
+                                    <option value="MECANICA">MECANICA</option>
+                                    <option value="ELECTRICIDAD">ELECTRICIDAD</option>
+                                    <option value="ELECTROMECANICA">ELECTROMECANICA</option>
+                                    <option value="NEUMATICA">NEUMATICA</option>
+                                    <option value="HIDRAULICA">HIDRAULICA</option>
+                                    <option value="OTROS">OTROS</option>
+                                </select>
+                                <select id="filterParteEnsamble" onchange="filterPartesTable()" style="max-width: 160px;">
+                                    <option value="">Todos los Tipos</option>
+                                    <option value="ensamble">Es Ensamble (BOM)</option>
+                                    <option value="simple">Parte Simple</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="partesTable" class="card glass-panel">Cargando partes...</div>
+                    </div>
+
+                    <!-- View 2: Full-Screen Parte Detail Screen -->
+                    <div id="parteDetailView" class="hidden">
+                        <div class="fullscreen-header glass-panel mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                            <button class="btn btn-secondary btn-sm" onclick="closeParteDetailView()">
+                                <i class="fa-solid fa-arrow-left"></i> Volver a Lista de Partes
+                            </button>
+                            <h2 id="detailParteScreenTitle" class="m-0">Detalle de Parte</h2>
+                            <button class="btn btn-danger btn-sm" onclick="deleteParteCurrentFS()"><i class="fa-solid fa-trash"></i> Eliminar Parte</button>
+                        </div>
+
+                        <div class="card glass-panel p-4">
+                            <div class="fullscreen-tabs">
+                                <button class="fs-tab-btn active" data-fstab="parteFSInfo"><i class="fa-solid fa-info-circle"></i> Info General</button>
+                                <button class="fs-tab-btn" data-fstab="parteFSSubpartes" id="tabFSBtnSubpartes"><i class="fa-solid fa-sitemap"></i> Subpartes (BOM)</button>
+                                <button class="fs-tab-btn" data-fstab="parteFSCotizaciones"><i class="fa-solid fa-receipt"></i> Cotizaciones</button>
+                                <button class="fs-tab-btn" data-fstab="parteFSArchivos"><i class="fa-solid fa-file-code"></i> Archivos Adjuntos</button>
+                            </div>
+
+                            <div class="fullscreen-body mt-4">
+                                <!-- Subtab 1: General Info -->
+                                <div id="parteFSInfo" class="fs-tab-content active">
+                                    <form id="formEditParteFS">
+                                        <input type="hidden" id="editParteFSId">
+                                        <div class="form-group">
+                                            <label>Nombre de la Parte</label>
+                                            <input type="text" id="editParteFSNombre" required>
+                                        </div>
+                                        <div class="grid-2-cols">
+                                            <div class="form-group">
+                                                <label>Categoría</label>
+                                                <select id="editParteFSCategoria">
+                                                    <option value="MECANICA">MECANICA</option>
+                                                    <option value="ELECTRONICA">ELECTRONICA</option>
+                                                    <option value="ELECTRICIDAD">ELECTRICIDAD</option>
+                                                    <option value="ELECTROMECANICA">ELECTROMECANICA</option>
+                                                    <option value="NEUMATICA">NEUMATICA</option>
+                                                    <option value="HIDRAULICA">HIDRAULICA</option>
+                                                    <option value="OTROS">OTROS</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Unidad de Medida</label>
+                                                <select id="editParteFSUnidad">
+                                                    <option value="UNIDADES">UNIDADES</option>
+                                                    <option value="MM">MM</option>
+                                                    <option value="M">M</option>
+                                                    <option value="LTS">LTS</option>
+                                                    <option value="KG">KG</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row mb-3">
+                                            <label style="display:flex; align-items:center; gap:0.5rem;">
+                                                <input type="checkbox" id="editParteFSEsEnsamble" onchange="toggleFSSubpartesTab()"> Es Ensamble (BOM)
+                                            </label>
+                                            <label style="display:flex; align-items:center; gap:0.5rem; margin-left:1.5rem;">
+                                                <input type="checkbox" id="editParteFSEsComercial" checked> Comercial
+                                            </label>
+                                        </div>
+                                        <div class="modal-actions">
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteParteCurrentFS()"><i class="fa-solid fa-trash"></i> Eliminar Parte</button>
+                                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-save"></i> Guardar Cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Subtab 2: Subpartes BOM -->
+                                <div id="parteFSSubpartes" class="fs-tab-content">
+                                    <h4>Componentes / Subpartes Hijas del Ensamble</h4>
+                                    <p class="text-muted small mb-3">Asocia componentes hijos necesarios para la fabricación de esta parte ensamble.</p>
+                                    <div id="parteFSSubpartesList" class="table-container mb-4">Cargando subpartes...</div>
+
+                                    <div class="card glass-panel p-3">
+                                        <h5><i class="fa-solid fa-plus-circle"></i> Agregar Componente Hijo</h5>
+                                        <form id="formAddSubparteFS" class="form-row mt-2">
+                                            <select id="selectChildParteFS" style="flex:2;" required></select>
+                                            <input type="number" id="childParteFSCantidad" value="1" min="1" placeholder="Cantidad" style="flex:1;" required>
+                                            <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-plus"></i> Vincular Subparte</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Subtab 3: Cotizaciones -->
+                                <div id="parteFSCotizaciones" class="fs-tab-content">
+                                    <h4>Cotizaciones de Proveedores</h4>
+                                    <p class="text-muted small mb-3">Historial de precios ofertados por proveedores para este componente.</p>
+                                    <div id="parteFSCotizacionesList" class="table-container mb-4">Cargando cotizaciones...</div>
+
+                                    <div class="card glass-panel p-3">
+                                        <h5><i class="fa-solid fa-plus-circle"></i> Registrar Nueva Cotización</h5>
+                                        <form id="formAddCotizacionFS" class="form-row mt-2">
+                                            <select id="selectQuoteProveedorFS" style="flex:2;" required></select>
+                                            <input type="number" step="0.01" id="quoteFSMonto" placeholder="Monto ($)" style="flex:1;" required>
+                                            <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-receipt"></i> Agregar Cotización</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Subtab 4: Archivos Adjuntos -->
+                                <div id="parteFSArchivos" class="fs-tab-content">
+                                    <h4>Archivos Adjuntos (Planos / Hojas de Datos)</h4>
+                                    <div id="parteFSLinkedFilesList" class="table-container mb-4">Cargando archivos vinculados...</div>
+
+                                    <div class="card glass-panel p-3">
+                                        <h5>Vincular Archivo del Catálogo a esta Parte</h5>
+                                        <form id="formLinkArchivoParteFS" class="form-row mt-2">
+                                            <select id="linkArchivoParteFSSelect" style="flex:3;" required></select>
+                                            <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-link"></i> Adjuntar Archivo</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Personas / Stakeholders -->
+                <section id="tabStakeholders" class="tab-content">
+                    <div class="section-header">
+                        <div>
+                            <h2>👥 Directorio de Personas & Stakeholders</h2>
+                            <p class="text-muted small">Explora el directorio general o navega a las vistas específicas de Empleados, Clientes y Proveedores.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="openModal('modalPersona')"><i class="fa-solid fa-user-plus"></i> Nueva Persona</button>
+                    </div>
+
+                    <div class="people-subnav mb-3">
+                        <button class="btn btn-sm btn-primary active" id="btnPeopleAll" onclick="switchPeopleSubTab('all')"><i class="fa-solid fa-users"></i> Todas las Personas</button>
+                        <button class="btn btn-sm btn-secondary" id="btnPeopleEmpleados" onclick="switchPeopleSubTab('empleados')"><i class="fa-solid fa-user-tie"></i> Empleados</button>
+                        <button class="btn btn-sm btn-secondary" id="btnPeopleClientes" onclick="switchPeopleSubTab('clientes')"><i class="fa-solid fa-user-tag"></i> Clientes</button>
+                        <button class="btn btn-sm btn-secondary" id="btnPeopleProveedores" onclick="switchPeopleSubTab('proveedores')"><i class="fa-solid fa-truck"></i> Proveedores</button>
+                    </div>
+
+                    <div class="filter-bar glass-panel mb-3">
+                        <input type="text" id="filterPersonaSearch" placeholder="🔍 Buscar por nombre, apellido o CUIT..." oninput="filterPersonasTable()">
+                    </div>
+
+                    <div id="stakeholdersList" class="card glass-panel">Cargando personas...</div>
+                </section>
+
+                <!-- Section 5: Documentos (Full-Screen Layout) -->
+                <section id="tabDocumentos" class="tab-content">
+                    <!-- View 1: Documentos List -->
+                    <div id="documentosListView">
+                        <div class="section-header">
+                            <div>
+                                <h2>📄 Documentos & Almacenamiento MinIO</h2>
+                                <p class="text-muted small">Haz clic sobre un documento para abrir en pantalla completa su historial de versiones relativas v1, v2, v3 y cargas.</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="openModal('modalDocumento')"><i class="fa-solid fa-cloud-arrow-up"></i> Subir Documento</button>
+                        </div>
+
+                        <div class="filter-bar glass-panel mb-3">
+                            <div class="form-row">
+                                <input type="text" id="filterDocSearch" placeholder="🔍 Buscar documento por nombre..." oninput="filterDocumentosTable()">
+                                <select id="filterDocEstado" onchange="filterDocumentosTable()" style="max-width: 180px;">
+                                    <option value="">Todos los Estados</option>
+                                    <option value="EN_REVISION">EN_REVISION</option>
+                                    <option value="APROBADO">APROBADO</option>
+                                    <option value="RECHAZADO">RECHAZADO</option>
+                                </select>
+                                <select id="filterDocAcceso" onchange="filterDocumentosTable()" style="max-width: 180px;">
+                                    <option value="">Todos los Accesos</option>
+                                    <option value="PUBLICO">PUBLICO</option>
+                                    <option value="PRIVADO">PRIVADO</option>
+                                    <option value="RESERVADO">RESERVADO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="documentosTable" class="card glass-panel">Cargando documentos...</div>
+                    </div>
+
+                    <!-- View 2: Full-Screen Documento Detail Screen -->
+                    <div id="documentoDetailView" class="hidden">
+                        <div class="fullscreen-header glass-panel mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                            <button class="btn btn-secondary btn-sm" onclick="closeDocumentoDetailView()">
+                                <i class="fa-solid fa-arrow-left"></i> Volver a Lista de Documentos
+                            </button>
+                            <h2 id="detailDocScreenTitle" class="m-0">Detalle del Documento</h2>
+                            <button class="btn btn-danger btn-sm" onclick="deleteDocumentoCurrentFS()"><i class="fa-solid fa-trash"></i> Eliminar Documento</button>
+                        </div>
+
+                        <div class="card glass-panel p-4">
+                            <form id="formEditDocumentoFS" class="mb-4">
+                                <input type="hidden" id="editDocFSId">
+                                <div class="grid-2-cols">
+                                    <div class="form-group">
+                                        <label>Nombre del Documento</label>
+                                        <input type="text" id="editDocFSNombre" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Descripción</label>
+                                        <input type="text" id="editDocFSDesc">
+                                    </div>
+                                </div>
+                                <div class="grid-2-cols">
+                                    <div class="form-group">
+                                        <label>Estado</label>
+                                        <select id="editDocFSEstado">
+                                            <option value="EN_REVISION">EN_REVISION</option>
+                                            <option value="APROBADO">APROBADO</option>
+                                            <option value="RECHAZADO">RECHAZADO</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nivel de Acceso</label>
+                                        <select id="editDocFSAcceso">
+                                            <option value="PUBLICO">PUBLICO</option>
+                                            <option value="PRIVADO">PRIVADO</option>
+                                            <option value="RESERVADO">RESERVADO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-actions">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-save"></i> Guardar Cambios del Documento</button>
+                                </div>
+                            </form>
+
+                            <hr class="divider">
+
+                            <h4 class="mt-3"><i class="fa-solid fa-history"></i> Historial de Versiones en MinIO</h4>
+                            <div id="docFSVersionsList" class="table-container mb-4">Cargando versiones...</div>
+
+                            <div class="card glass-panel p-3">
+                                <h5><i class="fa-solid fa-cloud-arrow-up"></i> Subir Nueva Versión del Archivo</h5>
+                                <form id="formUploadNewDocFSVersion" class="form-row mt-2">
+                                    <input type="file" id="newDocFSVersionFile" required style="flex:3;">
+                                    <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-upload"></i> Subir Versión</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6: Stock & Movimientos (Unified View with Toggle) -->
+                <section id="tabStock" class="tab-content">
+                    <div class="section-header">
+                        <div>
+                            <h2>📦 Control de Stock & Auditoría de Movimientos</h2>
+                            <p class="text-muted small">Selecciona entre la vista de existencias actuales o el historial de variaciones de inventario.</p>
+                        </div>
+                        <button class="btn btn-success" onclick="openModal('modalMovimiento')"><i class="fa-solid fa-arrow-transfer-exchange"></i> Registrar Movimiento</button>
+                    </div>
+
+                    <!-- Stock Sub-Navigation -->
+                    <div class="people-subnav mb-3">
+                        <button class="btn btn-sm btn-primary active" id="btnStockLevels" onclick="switchStockSubTab('levels')"><i class="fa-solid fa-boxes-stacked"></i> Nivel de Stock Actual</button>
+                        <button class="btn btn-sm btn-secondary" id="btnStockMovements" onclick="switchStockSubTab('movements')"><i class="fa-solid fa-history"></i> Historial de Movimientos</button>
+                    </div>
+
+                    <!-- View 1: Stock Levels -->
+                    <div id="stockLevelsView">
+                        <div class="filter-bar glass-panel mb-3">
+                            <input type="text" id="filterStockSearch" placeholder="🔍 Buscar por parte..." oninput="filterStockTable()">
+                        </div>
+                        <div id="stockLevelsTable" class="card glass-panel">Cargando...</div>
+                    </div>
+
+                    <!-- View 2: Stock Movements -->
+                    <div id="stockMovementsView" class="hidden">
+                        <div class="filter-bar glass-panel mb-3">
+                            <input type="text" id="filterMovSearch" placeholder="🔍 Buscar por parte o usuario..." oninput="filterMovimientosTable()">
+                        </div>
+                        <div id="stockMovementsTable" class="card glass-panel">Cargando...</div>
+                    </div>
+                </section>
+
+                <!-- Section 7: Archivos Catalog (Full-Screen Layout with Versioning Upload) -->
+                <section id="tabArchivos" class="tab-content">
+                    <!-- View 1: Archivos List -->
+                    <div id="archivosListView">
+                        <div class="section-header">
+                            <div>
+                                <h2>📁 Catálogo de Archivos Generales</h2>
+                                <p class="text-muted small">Planos, hojas de datos y manuales. Haz clic para ver en pantalla completa sus versiones y subir nuevas versiones.</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="openModal('modalArchivo')"><i class="fa-solid fa-upload"></i> Subir Nuevo Archivo</button>
+                        </div>
+
+                        <div class="filter-bar glass-panel mb-3">
+                            <input type="text" id="filterArchSearch" placeholder="🔍 Buscar por nombre de archivo..." oninput="filterArchivosTable()">
+                        </div>
+                        <div id="archivosTable" class="card glass-panel">Cargando archivos...</div>
+                    </div>
+
+                    <!-- View 2: Full-Screen Archivo Detail & Versions Screen -->
+                    <div id="archivoDetailView" class="hidden">
+                        <div class="fullscreen-header glass-panel mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                            <button class="btn btn-secondary btn-sm" onclick="closeArchivoDetailView()">
+                                <i class="fa-solid fa-arrow-left"></i> Volver a Lista de Archivos
+                            </button>
+                            <h2 id="detailArchScreenTitle" class="m-0">Detalle del Archivo</h2>
+                            <button class="btn btn-danger btn-sm" onclick="deleteArchivoCurrentFS()"><i class="fa-solid fa-trash"></i> Eliminar Archivo</button>
+                        </div>
+
+                        <div class="card glass-panel p-4">
+                            <h4 class="mb-3"><i class="fa-solid fa-history"></i> Historial de Versiones del Archivo (v1, v2, v3)</h4>
+                            <div id="archFSVersionsList" class="table-container mb-4">Cargando versiones...</div>
+
+                            <div class="card glass-panel p-3">
+                                <h5><i class="fa-solid fa-cloud-arrow-up"></i> Subir Nueva Versión de este Archivo</h5>
+                                <form id="formUploadNewArchFSVersion" class="form-row mt-2">
+                                    <input type="hidden" id="editArchFSId">
+                                    <input type="file" id="newArchFSVersionFile" required style="flex:3;">
+                                    <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-upload"></i> Cargar Nueva Versión</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 8: Finanzas -->
+                <section id="tabFinanzas" class="tab-content">
+                    <div class="section-header">
+                        <h2>💵 Registro de Ingresos & Egresos</h2>
+                        <div>
+                            <button class="btn btn-success me-2" onclick="openModal('modalIngreso')"><i class="fa-solid fa-plus"></i> Nuevo Ingreso</button>
+                            <button class="btn btn-danger" onclick="openModal('modalEgreso')"><i class="fa-solid fa-minus"></i> Nuevo Egreso</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-bar glass-panel mb-3">
+                        <input type="text" id="filterFinanzasSearch" placeholder="🔍 Buscar por descripción..." oninput="filterFinanzasTables()">
+                    </div>
+                    <div class="grid-2-cols">
+                        <div class="card glass-panel">
+                            <h3>🟢 Ingresos</h3>
+                            <div id="ingresosTable">Cargando...</div>
+                        </div>
+                        <div class="card glass-panel">
+                            <h3>🔴 Egresos</h3>
+                            <div id="egresosTable">Cargando...</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 9: Agente RAG (NVIDIA Nemotron 3 embed 1B & pgvector Chat) -->
+                <section id="tabAgenteRAG" class="tab-content">
+                    <div class="section-header">
+                        <h2><i class="fa-solid fa-brain text-success"></i> Agente RAG - Búsqueda de Documentos y Conocimiento</h2>
+                        <p class="text-muted small">Consultas inteligentes sobre documentos en lenguaje natural utilizando embeddings de <strong>NVIDIA Nemotron 3 embed 1B</strong> (<code>nvidia/nemotron-3-embed-1b:free</code>) y búsqueda por similitud cosenoidal en <strong>pgvector</strong>.</p>
+                    </div>
+
+                    <!-- Prompt Suggestion Chips -->
+                    <div class="suggestion-chips-container mb-3">
+                        <span class="suggestion-label"><i class="fa-solid fa-lightbulb"></i> Ejemplos sugeridos:</span>
+                        <div class="suggestion-chips">
+                            <button class="chip" onclick="useRAGPrompt('¿Cómo integra datos el sistema BDIA mediante pipelines ETL?')">
+                                ⚙️ Pipelines ETL en BDIA
+                            </button>
+                            <button class="chip" onclick="useRAGPrompt('¿Cómo se gestiona la autenticación de usuarios mediante tokens?')">
+                                🔐 Autenticación y JWT
+                            </button>
+                            <button class="chip" onclick="useRAGPrompt('¿Cuáles son las especificaciones técnicas de los componentes mecánicos?')">
+                                📄 Especificaciones de Documentos
+                            </button>
+                            <button class="chip" onclick="useRAGPrompt('Resume la información disponible en los documentos sobre gestión de stock')">
+                                📊 Resumen de Documentación
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Chat Container Window -->
+                    <div class="card glass-panel chat-container">
+                        <div id="ragChatHistory" class="chat-messages">
+                            <div class="chat-message assistant">
+                                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                                <div class="message-content">
+                                    <p>👋 Hola. Soy el <strong>Agente RAG de BDIA</strong>. Puedo responder tus preguntas consultando la base de documentos mediante el modelo de embeddings <strong>NVIDIA Nemotron 3 embed 1B</strong> y citando las fuentes exactas utilizadas.</p>
+                                    <p class="small text-muted mb-0">¿En qué puedo ayudarte hoy?</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat Input Box -->
+                        <div class="chat-input-form mt-3">
+                            <div class="input-wrapper">
+                                <input type="text" id="ragChatInput" placeholder="Escribe tu consulta sobre los documentos..." onkeypress="if(event.key === 'Enter') sendRAGChatMessage()">
+                                <button class="btn btn-primary" id="btnSendRAGChat" onclick="sendRAGChatMessage()">
+                                    <i class="fa-solid fa-paper-plane"></i> Consultar Agente
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 10: Asistente NL2SQL (Text-to-SQL Chat) -->
+                <section id="tabNL2SQL" class="tab-content">
+                    <div class="section-header">
+                        <h2><i class="fa-solid fa-wand-magic-sparkles text-primary"></i> Consulta SQL en Lenguaje Natural</h2>
+                        <p class="text-muted small">Escribe tu consulta en lenguaje natural. El agente LangChain con OpenRouter generará la consulta SQL SELECT, la ejecutará de forma segura y te entregará el resultado formateado.</p>
+                    </div>
+
+                    <!-- Prompt Suggestion Chips -->
+                    <div class="suggestion-chips-container mb-3">
+                        <span class="suggestion-label"><i class="fa-solid fa-lightbulb"></i> Ejemplos sugeridos:</span>
+                        <div class="suggestion-chips">
+                            <button class="chip" onclick="useNL2SQLPrompt('¿Cuáles son los proyectos que actualmente están en progreso?')">
+                                🚀 Proyectos en progreso
+                            </button>
+                            <button class="chip" onclick="useNL2SQLPrompt('¿Qué partes tienen menos de 50 unidades en stock?')">
+                                📦 Partes con bajo stock
+                            </button>
+                            <button class="chip" onclick="useNL2SQLPrompt('¿Cuáles son los 5 empleados con mayor sueldo y qué puesto ocupan?')">
+                                👥 Empleados y sueldos
+                            </button>
+                            <button class="chip" onclick="useNL2SQLPrompt('¿Cuánto dinero ha ingresado y egresado en total hasta la fecha?')">
+                                💰 Balance total finanzas
+                            </button>
+                            <button class="chip" onclick="useNL2SQLPrompt('¿Qué proveedores suministran componentes electrónicos y cuáles son los precios?')">
+                                🏬 Proveedores y componentes
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Chat Container -->
+                    <div class="chat-container glass-panel">
+                        <!-- Chat Scroll Window -->
+                        <div id="chatMessages" class="chat-messages">
+                            <!-- Welcome Initial AI Message -->
+                            <div class="chat-message assistant">
+                                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                                <div class="message-content">
+                                    <p>¡Hola! Soy tu asistente de datos BDIA. ¿Qué deseas consultar sobre la base de datos hoy?</p>
+                                    <p class="small text-muted mb-0">Ejemplo: <em>"¿Cuáles son los proyectos activos y sus fechas de inicio?"</em></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat Input Bar -->
+                        <form id="nl2sqlForm" class="chat-input-form" onsubmit="handleNL2SQLSubmit(event); return false;">
+                            <div class="input-wrapper">
+                                <input type="text" id="nl2sqlInput" placeholder="Escribe tu consulta en lenguaje natural..." autocomplete="off" required>
+                                <button type="submit" id="nl2sqlSendBtn" class="btn btn-primary">
+                                    <i class="fa-solid fa-paper-plane"></i> Consultar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- CREATION MODALS SECTION (Lightweight dialogs for creation) -->
+    <!-- ========================================================= -->
+
+    <!-- Modal Create Proyecto -->
+    <div id="modalProyecto" class="modal-backdrop hidden">
+        <div class="modal-card glass-panel">
+            <h3><i class="fa-solid fa-diagram-project"></i> Nuevo Proyecto</h3>
+            <form id="formProyecto">
+                <div class="form-group">
+                    <label>Nombre del Proyecto</label>
+                    <input type="text" id="projNombre" required placeholder="Ej. Sistema IoT Sensor">
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select id="projEstado">
+                        <option value="EN_PROGRESO">EN_PROGRESO</option>
+                        <option value="PAUSADO">PAUSADO</option>
+                        <option value="FINALIZADO">FINALIZADO</option>
+                        <option value="CANCELADO">CANCELADO</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalProyecto')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Proyecto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Create Parte -->
+    <div id="modalParte" class="modal-backdrop hidden">
+        <div class="modal-card glass-panel">
+            <h3><i class="fa-solid fa-gears"></i> Nueva Parte / Insumo</h3>
+            <form id="formParte">
+                <div class="form-group">
+                    <label>Nombre de la Parte</label>
+                    <input type="text" id="parteNombre" required placeholder="Ej. Sensor de Humedad DHT22">
+                </div>
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Unidad de Medida</label>
+                        <select id="parteUnidad">
+                            <option value="UNIDADES">UNIDADES</option>
+                            <option value="MM">MM</option>
+                            <option value="M">M</option>
+                            <option value="LTS">LTS</option>
+                            <option value="KG">KG</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <select id="parteCategoria">
+                            <option value="ELECTRONICA">ELECTRONICA</option>
+                            <option value="MECANICA">MECANICA</option>
+                            <option value="ELECTRICIDAD">ELECTRICIDAD</option>
+                            <option value="ELECTROMECANICA">ELECTROMECANICA</option>
+                            <option value="NEUMATICA">NEUMATICA</option>
+                            <option value="HIDRAULICA">HIDRAULICA</option>
+                            <option value="OTROS">OTROS</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="parteEsEnsamble"> Es Ensamble (Componente compuesto)
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalParte')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear Parte</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Create Documento -->
+    <div id="modalDocumento" class="modal-backdrop hidden">
+        <div class="modal-card glass-panel">
+            <h3><i class="fa-solid fa-cloud-arrow-up"></i> Subir Documento a MinIO</h3>
+            <form id="formDocumento">
+                <div class="form-group">
+                    <label>Nombre del Documento</label>
+                    <input type="text" id="docNombre" required placeholder="Ej. Especificación Técnica Rev A">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text" id="docDesc" placeholder="Descripción breve del contenido">
+                </div>
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select id="docEstado">
+                            <option value="EN_REVISION">EN_REVISION</option>
+                            <option value="APROBADO">APROBADO</option>
+                            <option value="RECHAZADO">RECHAZADO</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nivel de Acceso</label>
+                        <select id="docAcceso">
+                            <option value="PUBLICO">PUBLICO</option>
+                            <option value="PRIVADO">PRIVADO</option>
+                            <option value="RESERVADO">RESERVADO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Archivo adjunto</label>
+                    <input type="file" id="docFile" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalDocumento')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Subir Documento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Create Persona -->
+    <div id="modalPersona" class="modal-backdrop hidden">
+        <div class="modal-card glass-panel">
+            <h3><i class="fa-solid fa-user-plus"></i> Nueva Persona</h3>
+            <form id="formPersona">
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" id="perNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido</label>
+                        <input type="text" id="perApellido" required>
+                    </div>
+                </div>
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>CUIT (Opcional)</label>
+                        <input type="text" id="perCuit" placeholder="Ej. 20-30405060-7">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="text" id="perTelefono">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Ciudad</label>
+                    <input type="text" id="perCiudad">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalPersona')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Persona</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Create Movimiento Stock -->
+    <div id="modalMovimiento" class="modal-backdrop hidden">
+        <div class="modal-card glass-panel">
+            <h3><i class="fa-solid fa-arrow-transfer-exchange"></i> Registrar Movimiento de Stock</h3>
+            <form id="formMovimiento">
+                <div class="form-group">
+                    <label>Parte / Insumo</label>
+                    <select id="movParteId" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Cantidad (+ para Entrada, - para Salida)</label>
+                    <input type="number" step="0.01" id="movCantidad" required placeholder="Ej. +10 o -5">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalMovimiento')">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Registrar Movimiento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Create Archivo Catalog -->
+    <div id="modalArchivo" class="modal-backdrop hidden">
+        <div class="modal-card glass-panel">
+            <h3><i class="fa-solid fa-upload"></i> Subir Archivo al Catálogo</h3>
+            <form id="formArchivo">
+                <div class="form-group">
+                    <label>Nombre del Archivo</label>
+                    <input type="text" id="archNombre" required placeholder="Ej. Plano Mecánico Caja Rev B">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text" id="archDesc" placeholder="Descripción breve del archivo">
+                </div>
+                <div class="form-group">
+                    <label>Archivo adjunto</label>
+                    <input type="file" id="archFile" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalArchivo')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Subir Archivo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Create Ingreso -->
+    <div id="modalIngreso" class="modal-backdrop hidden">
+        <div class="modal-card glass-panel">
+            <h3><i class="fa-solid fa-plus"></i> Nuevo Ingreso Financiero</h3>
+            <form id="formIngreso">
+                <div class="form-group">
+                    <label>Monto</label>
+                    <input type="number" step="0.01" id="ingMonto" required placeholder="1000.00">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text" id="ingDesc" required placeholder="Ej. Cobro de Hito 1">
+                </div>
+                <div class="form-group">
+                    <label>Proyecto Asociado (Opcional)</label>
+                    <select id="ingProjId"></select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalIngreso')">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Registrar Ingreso</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Create Egreso -->
+    <div id="modalEgreso" class="modal-backdrop hidden">
+        <div class="modal-card glass-panel">
+            <h3><i class="fa-solid fa-minus"></i> Nuevo Egreso Financiero</h3>
+            <form id="formEgreso">
+                <div class="form-group">
+                    <label>Monto</label>
+                    <input type="number" step="0.01" id="egrMonto" required placeholder="500.00">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text" id="egrDesc" required placeholder="Ej. Compra insumos electrónica">
+                </div>
+                <div class="form-group">
+                    <label>Proyecto Asociado (Opcional)</label>
+                    <select id="egrProjId"></select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalEgreso')">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Registrar Egreso</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script src="/static/app.js?v=2.3.0"></script>
+</body>
+</html>

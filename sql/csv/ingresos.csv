@@ -1,0 +1,3 @@
+ingreso_id,monto,fecha,descripcion,empleado_id,cliente_id,proyecto_id
+1,500000.00,2023-03-15 14:00:00,Adelanto Proyecto IoT,1,1,1
+2,350000.00,2023-05-10 11:00:00,Cobro Hito 1 RAG,1,1,2

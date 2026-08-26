@@ -1,0 +1,6 @@
+user_id,mail,password,active,rol
+1,admin@empresa.com,$2b$12$qiiOz4T46uDkUliX8xeYdOuuANFzStAHm3/PD3EgicsUdPYRAuqf6,true,FULL_ACCESS
+2,jgarcia@empresa.com,$2b$12$qiiOz4T46uDkUliX8xeYdOuuANFzStAHm3/PD3EgicsUdPYRAuqf6,true,RESTRICTED
+3,mrodriguez@empresa.com,$2b$12$qiiOz4T46uDkUliX8xeYdOuuANFzStAHm3/PD3EgicsUdPYRAuqf6,true,VIEW_ONLY
+4,llopez@cliente.com,$2b$12$qiiOz4T46uDkUliX8xeYdOuuANFzStAHm3/PD3EgicsUdPYRAuqf6,true,VIEW_ONLY
+5,cgonzalez@proveedor.com,$2b$12$qiiOz4T46uDkUliX8xeYdOuuANFzStAHm3/PD3EgicsUdPYRAuqf6,true,RESTRICTED

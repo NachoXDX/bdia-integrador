@@ -1,0 +1,3 @@
+documento_id,nombre,descripcion,version_id,estado,acceso,metadata
+1,Especificacion Tecnica IoT,Documento de arquitectura del sistema IoT,,APROBADO,PUBLICO,"{""autor"": ""Carlos Gomez""}"
+2,Manual de Implementacion RAG,Guia de despliegue RAG,,EN_REVISION,RESERVADO,"{""autor"": ""Maria Rodriguez""}"

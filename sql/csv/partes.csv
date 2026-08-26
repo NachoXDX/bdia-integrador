@@ -1,0 +1,5 @@
+parte_id,nombre,unidad,categoria,es_ensamble,es_comercial,metadata
+1,Placa Madre Industrial,UNIDADES,ELECTRONICA,true,true,"{""revision"": ""v2.1"", ""voltaje"": ""12V""}"
+2,Microprocesador ARM64,UNIDADES,ELECTRONICA,false,true,"{""frecuencia"": ""2.4GHz""}"
+3,Memoria RAM 16GB,UNIDADES,ELECTRONICA,false,true,"{""tipo"": ""DDR4""}"
+4,Gabinete Rack 2U,UNIDADES,MECANICA,false,true,"{""material"": ""Aluminio""}"

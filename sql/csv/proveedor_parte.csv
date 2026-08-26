@@ -1,0 +1,3 @@
+proveedor_id,parte_id,responsable,fecha,monto,metadata
+1,1,1,2023-04-01 00:00:00,150.00,"{""garantia"": ""12 meses""}"
+1,2,1,2023-04-01 00:00:00,45.00,"{""garantia"": ""24 meses""}"

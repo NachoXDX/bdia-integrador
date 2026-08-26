@@ -1,0 +1,6 @@
+persona_id,nombre,apellido,telefono,direccion_pais,direccion_provincia,direccion_ciudad,direccion_calle,direccion_numero,cuit,user_id,active
+1,Carlos,Gomez,+541144445555,Argentina,Buenos Aires,CABA,Av. Corrientes,1234,20-30111222-3,1,true
+2,Juan,Garcia,+541144446666,Argentina,Buenos Aires,La Plata,Calle 50,456,20-32444555-4,2,true
+3,Maria,Rodriguez,+541144447777,Argentina,Cordoba,Cordoba,Av. Colon,789,27-35666777-5,3,true
+4,Laura,Lopez,+541144448888,Argentina,Santa Fe,Rosario,Calle Cordoba,1011,27-28999000-6,4,true
+5,Christian,Gonzalez,+541144449999,Argentina,Buenos Aires,Quilmes,Av. Mitre,2022,20-25111333-7,5,true
