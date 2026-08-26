@@ -373,14 +373,17 @@ def list_personas(db=Depends(get_db_with_rls)):
 
 @app.post("/personas", tags=["Stakeholders"])
 def create_persona(payload: PersonaCreate, current_user: dict = Depends(get_current_user), db=Depends(get_db_with_rls)):
-    user_id = payload.user_id if payload.user_id else current_user["user_id"]
+    user_id = payload.user_id
     with db.cursor() as cur:
-        cur.execute("""
-            INSERT INTO personas (nombre, apellido, telefono, direccion_pais, direccion_provincia, direccion_ciudad, direccion_calle, direccion_numero, cuit, user_id)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            RETURNING *
-        """, (payload.nombre, payload.apellido, payload.telefono, payload.direccion_pais, payload.direccion_provincia, payload.direccion_ciudad, payload.direccion_calle, payload.direccion_numero, payload.cuit, user_id))
-        return dict(cur.fetchone())
+        try:
+            cur.execute("""
+                INSERT INTO personas (nombre, apellido, telefono, direccion_pais, direccion_provincia, direccion_ciudad, direccion_calle, direccion_numero, cuit, user_id)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                RETURNING *
+            """, (payload.nombre, payload.apellido, payload.telefono, payload.direccion_pais, payload.direccion_provincia, payload.direccion_ciudad, payload.direccion_calle, payload.direccion_numero, payload.cuit, user_id))
+            return dict(cur.fetchone())
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Database error creating persona: {str(e)}")
 
 @app.delete("/personas/{persona_id}", tags=["Stakeholders"])
 def delete_persona(persona_id: int, db=Depends(get_db_with_rls)):

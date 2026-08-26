@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BDIA - Sistema de Gestión Integral StartUp</title>
+    <title>Sistema de Gestión Integral StartUp</title>
     <!-- Google Fonts & Font Awesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
         <div class="login-card glass-panel">
             <div class="brand">
                 <i class="fa-solid fa-cubes-stacked brand-icon"></i>
-                <h2>BDIA Integrador</h2>
+                <h2>Sistema Integrador</h2>
                 <p>Sistema de Gestión & RAG Vectorial</p>
             </div>
             <form id="loginForm">
@@ -46,7 +46,7 @@
             <div class="nav-left">
                 <div class="nav-brand">
                     <i class="fa-solid fa-cubes-stacked"></i>
-                    <span>BDIA System</span>
+                    <span>Sistema de Gestión</span>
                 </div>
                 <div class="nav-user-info" id="navUserInfo">
                     <span class="user-email-badge" id="userEmailBadge"><i class="fa-solid fa-user-circle"></i> admin@empresa.com</span>
@@ -84,7 +84,7 @@
                 <section id="tabWelcome" class="tab-content active">
                     <div class="welcome-banner glass-panel mb-4">
                         <div class="welcome-text">
-                            <h1>👋 Bienvenido a BDIA System</h1>
+                            <h1>👋 Bienvenido al Sistema de Gestión</h1>
                             <p>Plataforma de gestión integral de proyectos, inventario de componentes, stakeholders, documentos y control de stock.</p>
                         </div>
                     </div>
@@ -687,32 +687,13 @@
                         <p class="text-muted small">Consultas inteligentes sobre documentos en lenguaje natural utilizando embeddings de <strong>NVIDIA Nemotron 3 embed 1B</strong> (<code>nvidia/nemotron-3-embed-1b:free</code>) y búsqueda por similitud cosenoidal en <strong>pgvector</strong>.</p>
                     </div>
 
-                    <!-- Prompt Suggestion Chips -->
-                    <div class="suggestion-chips-container mb-3">
-                        <span class="suggestion-label"><i class="fa-solid fa-lightbulb"></i> Ejemplos sugeridos:</span>
-                        <div class="suggestion-chips">
-                            <button class="chip" onclick="useRAGPrompt('¿Cómo integra datos el sistema BDIA mediante pipelines ETL?')">
-                                ⚙️ Pipelines ETL en BDIA
-                            </button>
-                            <button class="chip" onclick="useRAGPrompt('¿Cómo se gestiona la autenticación de usuarios mediante tokens?')">
-                                🔐 Autenticación y JWT
-                            </button>
-                            <button class="chip" onclick="useRAGPrompt('¿Cuáles son las especificaciones técnicas de los componentes mecánicos?')">
-                                📄 Especificaciones de Documentos
-                            </button>
-                            <button class="chip" onclick="useRAGPrompt('Resume la información disponible en los documentos sobre gestión de stock')">
-                                📊 Resumen de Documentación
-                            </button>
-                        </div>
-                    </div>
-
                     <!-- Chat Container Window -->
                     <div class="card glass-panel chat-container">
                         <div id="ragChatHistory" class="chat-messages">
                             <div class="chat-message assistant">
                                 <div class="avatar"><i class="fa-solid fa-robot"></i></div>
                                 <div class="message-content">
-                                    <p>👋 Hola. Soy el <strong>Agente RAG de BDIA</strong>. Puedo responder tus preguntas consultando la base de documentos mediante el modelo de embeddings <strong>NVIDIA Nemotron 3 embed 1B</strong> y citando las fuentes exactas utilizadas.</p>
+                                    <p>👋 Hola. Soy el <strong>Agente RAG</strong>. Puedo responder tus preguntas consultando la base de documentos mediante el modelo de embeddings <strong>NVIDIA Nemotron 3 embed 1B</strong> y citando las fuentes exactas utilizadas.</p>
                                     <p class="small text-muted mb-0">¿En qué puedo ayudarte hoy?</p>
                                 </div>
                             </div>
@@ -737,28 +718,6 @@
                         <p class="text-muted small">Escribe tu consulta en lenguaje natural. El agente LangChain con OpenRouter generará la consulta SQL SELECT, la ejecutará de forma segura y te entregará el resultado formateado.</p>
                     </div>
 
-                    <!-- Prompt Suggestion Chips -->
-                    <div class="suggestion-chips-container mb-3">
-                        <span class="suggestion-label"><i class="fa-solid fa-lightbulb"></i> Ejemplos sugeridos:</span>
-                        <div class="suggestion-chips">
-                            <button class="chip" onclick="useNL2SQLPrompt('¿Cuáles son los proyectos que actualmente están en progreso?')">
-                                🚀 Proyectos en progreso
-                            </button>
-                            <button class="chip" onclick="useNL2SQLPrompt('¿Qué partes tienen menos de 50 unidades en stock?')">
-                                📦 Partes con bajo stock
-                            </button>
-                            <button class="chip" onclick="useNL2SQLPrompt('¿Cuáles son los 5 empleados con mayor sueldo y qué puesto ocupan?')">
-                                👥 Empleados y sueldos
-                            </button>
-                            <button class="chip" onclick="useNL2SQLPrompt('¿Cuánto dinero ha ingresado y egresado en total hasta la fecha?')">
-                                💰 Balance total finanzas
-                            </button>
-                            <button class="chip" onclick="useNL2SQLPrompt('¿Qué proveedores suministran componentes electrónicos y cuáles son los precios?')">
-                                🏬 Proveedores y componentes
-                            </button>
-                        </div>
-                    </div>
-
                     <!-- Main Chat Container -->
                     <div class="chat-container glass-panel">
                         <!-- Chat Scroll Window -->
@@ -767,7 +726,7 @@
                             <div class="chat-message assistant">
                                 <div class="avatar"><i class="fa-solid fa-robot"></i></div>
                                 <div class="message-content">
-                                    <p>¡Hola! Soy tu asistente de datos BDIA. ¿Qué deseas consultar sobre la base de datos hoy?</p>
+                                    <p>¡Hola! Soy tu asistente de datos. ¿Qué deseas consultar sobre la base de datos hoy?</p>
                                     <p class="small text-muted mb-0">Ejemplo: <em>"¿Cuáles son los proyectos activos y sus fechas de inicio?"</em></p>
                                 </div>
                             </div>

@@ -1,10 +1,10 @@
 // =========================================================
-// BDIA Single Page Application Frontend Client
+// Single Page Application Frontend Client
 // Handles API calls, full-screen detail views, filtering & UI rendering
 // =========================================================
 
 const API_BASE = "";
-let currentToken = localStorage.getItem("bdia_token") || null;
+let currentToken = localStorage.getItem("app_token") || localStorage.getItem("bdia_token") || null;
 let currentUser = null;
 
 // Cache arrays for client-side instant filtering
@@ -40,6 +40,7 @@ async function initApp() {
         } catch (err) {
             console.warn("Token invalido o expirado:", err);
             currentToken = null;
+            localStorage.removeItem("app_token");
             localStorage.removeItem("bdia_token");
         }
     }
@@ -73,7 +74,7 @@ function setupEventListeners() {
             const data = await res.json();
             currentToken = data.access_token;
             currentUser = data.user || { mail, rol: "FULL_ACCESS" };
-            localStorage.setItem("bdia_token", currentToken);
+            localStorage.setItem("app_token", currentToken);
             showAppScreen();
         } catch (err) {
             errDiv.textContent = err.message;
@@ -85,6 +86,7 @@ function setupEventListeners() {
     document.getElementById("logoutBtn").addEventListener("click", () => {
         currentToken = null;
         currentUser = null;
+        localStorage.removeItem("app_token");
         localStorage.removeItem("bdia_token");
         showLoginScreen();
     });
