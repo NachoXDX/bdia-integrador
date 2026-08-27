@@ -45,6 +45,8 @@ LIMIT 1;
 -- 3. ¿Qué componentes (desglosados) se requieren para llevar a cabo el proyecto x?
 -- Utiliza una consulta recursiva (CTE) para desglosar la estructura completa de partes
 -- y subpartes (BOM - Bill of Materials) multiplicando las cantidades en cada nivel.
+-- Se filtra `es_ensamble = FALSE` al final para obtener únicamente las partes/insumos
+-- individuales y evitar la doble contabilización de los ensambles.
 -- ---------------------------------------------------------
 WITH RECURSIVE desglose AS (
     -- Nivel inicial: partes directamente asignadas al proyecto
@@ -65,7 +67,7 @@ WITH RECURSIVE desglose AS (
 
     UNION ALL
 
-    -- Nivel recursivo: desglose de los ensambles en subpartes
+    -- Nivel recursivo: desglose de los ensambles en subpartes (solo si el elemento padre es ensamble)
     SELECT 
         d.proyecto_id,
         sub.parte_id,
@@ -80,7 +82,8 @@ WITH RECURSIVE desglose AS (
     FROM desglose d
     JOIN parte_parte pm ON d.parte_id = pm.padre_id
     JOIN partes sub ON pm.hijo_id = sub.parte_id
-    WHERE NOT (sub.parte_id = ANY(d.ruta)) -- Control para evitar bucles infinitos
+    WHERE d.es_ensamble = TRUE -- Solo desglosar si el padre es un ensamble
+      AND NOT (sub.parte_id = ANY(d.ruta)) -- Control para evitar bucles infinitos
 )
 SELECT 
     parte_id,
@@ -91,6 +94,7 @@ SELECT
     es_comercial,
     SUM(cantidad_requerida) AS cantidad_total_requerida
 FROM desglose
+WHERE es_ensamble = FALSE -- Filtrar ensambles para evitar doble contabilización con sus subpartes
 GROUP BY parte_id, parte_nombre, unidad, categoria, es_ensamble, es_comercial
 ORDER BY parte_id ASC;
 
@@ -107,6 +111,7 @@ WITH RECURSIVE desglose AS (
         p.parte_id,
         p.nombre AS parte_nombre,
         p.unidad,
+        p.es_ensamble,
         pp.cantidad::NUMERIC AS cantidad_requerida,
         ARRAY[p.parte_id] AS ruta
     FROM proyecto_parte pp
@@ -120,12 +125,14 @@ WITH RECURSIVE desglose AS (
         sub.parte_id,
         sub.nombre AS parte_nombre,
         sub.unidad,
+        sub.es_ensamble,
         (d.cantidad_requerida * pm.cantidad::NUMERIC),
         d.ruta || sub.parte_id
     FROM desglose d
     JOIN parte_parte pm ON d.parte_id = pm.padre_id
     JOIN partes sub ON pm.hijo_id = sub.parte_id
-    WHERE NOT (sub.parte_id = ANY(d.ruta))
+    WHERE d.es_ensamble = TRUE
+      AND NOT (sub.parte_id = ANY(d.ruta))
 ),
 requeridos AS (
     SELECT 
@@ -134,6 +141,7 @@ requeridos AS (
         unidad,
         SUM(cantidad_requerida) AS cantidad_requerida
     FROM desglose
+    WHERE es_ensamble = FALSE
     GROUP BY parte_id, parte_nombre, unidad
 )
 SELECT 
