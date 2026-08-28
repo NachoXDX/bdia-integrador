@@ -126,7 +126,7 @@ Se recomienda consultar el modelo logico en el siguiente [enlace](https://miro.c
    ```
 
 4. **Acceso a las Interfaces**:
-   * **Aplicación Web / Dashboard**: [http://localhost:8000](http://localhost:8000) *(Email: `admin@example.com`, Password: `admin123`)*
+   * **Aplicación Web / Dashboard**: [http://localhost:8000](http://localhost:8000) *(Email: `admin@empresa.com`, Password: `admin123`)*
    * **pgAdmin 4**: [http://localhost:8080](http://localhost:8080) *(Email: `admin@example.com`, Password: `admin`)*
    * **Consola de MinIO**: [http://localhost:9001](http://localhost:9001) *(User: `minioadmin`, Password: `minioadmin`)*
 
